@@ -5,7 +5,7 @@
 | Componente | Recomendación             |
 |------------|---------------------------|
 | Sistema    | Ubuntu 22.04 LTS   |
-| RAM        | 16 GB                 |
+| RAM        | 32 GB                 |
 | CPU        | 8 núcleos 16 Threads             |
 | Disco      | 100 GB SSD     
 
