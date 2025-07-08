@@ -72,6 +72,35 @@ Una vez que tenemos el servidor solo debemos acceder a el desde nuestro equipo.
 ssh -i ~/.ssh/id_rsa usuario@IP
 ```
 
+En el caso de Vast, debemos agregar una SSH key, ya sea antes de levantar la instancia o luego de levantada, debemos agregarla, una SSH key no es mas que una llave de acceso que generamos en nuestro equipo y la ponemos en el servidor para poder acceder.
+
+Con este comando en tu terminal desde el equipo donde estaras accediendo al servidor vamos a generar esta SSH Key:
+
+```bash
+ssh-keygen -t rsa -b 4096
+```
+
+Esto creara la llave y la guardara en la ubicacion que te da por defecto y te pedira ponerle un password. para obtener esta llave que hemos generado en nuestro equipo vamos a usar CAT en la ubicacion del archivo recien generado, EJ:
+
+```bash
+cat /Users/inbest/.ssh/id_rsa.pub    
+```
+
+Esto te devolvera la llave que inicia con (ssh-rsa AAB3N.....) y finaliza con (......6g3PIxL/zww== inbest@Inbest.local)
+
+La copiamos toda y la agregamos en vast y presionamos "ADD SSH KEY"
+
+ya simplemente para acceder a tu servidor desde tu terminal en la mac o en windows powershell usas el comando de SSH que te dara vast y sera algo como esto:
+
+```bash
+ssh -p XXXXX root@XXX.X.XXX.XXX -L 8080:localhost:8080
+```
+
+luego le diras que "yes" y luego pondras la clave que pusiste al generar tu SSH Key en el paso anterior, listo ya estas dentro del servidor!
+
+Luego de generada en vast podemos ir la apartado de "Keys", VAMOS A SSH Key y agregamos la llave aqui.
+
+
 Si estas en windows puedes usar Putty para acceder a tu servidor usando SSH. simplemente con tu iP del servidor usuario y clave podras hacerlo (buscate un video de como usar putty para ssh)
 y ya estaras en el terminal de tu servidor alguilado! Felicidades
 
@@ -445,6 +474,10 @@ Aqui debemos ajustar el segment size y el kecck según recomendación oficial de
 
 https://docs.beboundless.xyz/provers/performance-optimization#finding-the-maximum-segment_size-for-gpu-vram
 
+Tambien podemos revisar los agentes de execution y modificar sus recursos asignandoles mas memoria y podemos crear mas agentes de execution tambien, lo mismo con el agente de GPU, podemos darle mas recursos o crear mas agentes GPU si tenemos varias tarjetas graficas.
+
+Para trabajar mejor te recomiendo tener 3 agentes de execution por cada gpu agent que tengas! 
+
 bajamos y borramos el servicio
 ```bash
 just broker down
@@ -504,8 +537,26 @@ boundless account deposit-stake 30
 
 ### 🧠 modifica y optimizar broker.toml según setup para ser mas eficiente (avanzado)
 
+Esta parte es la mas importante y sera el corazon de tu estrategía que te permitira obtener la mayor cantidad de ordenes posibles, aqui cambiaras valores como precios minimos, tamano minimo y performance ideal de tu equipo, aqui esta varia segun tu equipo especifico y cada quien tendra configuraciones diferentes, sin embargo en el video tutorial tratare de explicarte las configuraciones que mas te pueden servir y porque!
 
-¿Listo para usar tu nodo Sepolia para pruebas y desarrollo? 🚀  
+En general trata de:
+
+- no tomar ordenes muy grandes si no tiene un setup muy potente
+- colocar un precio por ciclo economico para poder competir pero tampoco muy bajo que no sea rentable
+- colocar el peak khz realista, no subirlo mucho si no puedes cumplirlo, inicia con un numero bajo y ve subiendo si ves que tu equipo al resolver pruebas alcanza mayor khz en el explorador
+- En el batcher, fuerza as transacciones cuando ya tiene 1 sola prueba lista para no perder tiempo esperando mas pruebas en el batch.
+- Utiliza concurrent proof en 2 y no mas amenos que tengas varios GPUs
+- Activa concurrent preflights y ponlo en 2-3 y asegurate tener 3 exec agents almenos
+- unete al programa de inbest!
+
+
+### 🧠 Aumentando el FEE de prioridad de tus transacciones
+
+La transaccion de lock in es la mas importante ya que es la que te permite bloquear la prueba y asegurarte que tu la resuelvas, por eso es indispensable, enviar esta transaccion lo antes posible y enviarla con un fee de prioridad que te petmita adelantarte al resto de mineros que compiten por bloquearla
+
+En el archivo broker.toml solo uedes anadir priority gas, que no es lo mismo que priority fee en gwei! es una diferencia importante, lo que nosotros queremos modificar es el priority fee en GWEI, no el gas! y la unica forma de modificarlo es cambiando el codigo fuente de boundless para forzar un priority fee mas elevado y esto no lo incluyo en esta guia por que es algo mucho mas avanzado! si eres esa persona mas avanzada, te invito a unirte al programa de inbest donde estamos modo degens haciendo todo esto!
+
+¿Listo para minar ZK? 🚀  
 
 - dudas: @inbestprogram
 
