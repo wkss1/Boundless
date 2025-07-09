@@ -416,6 +416,13 @@ sudo apt install -y cargo
 ```
  Verificar entorno limpio. Correr em cd boundless:  
 
+Vamos al directorio de Boundless
+
+```bash
+cd boundless
+```
+limpiamos el entorno
+
 ```bash
 just broker down || true
 just broker clean || true
@@ -428,15 +435,6 @@ just broker clean || true
     
 ```bash
 RUST_LOG=info bento_cli -c 32
-```
----
-
-## 4️⃣ Comprobar puertos utilizados
-
-Con este comando podemos verificar si los puertos estan siendo utilizados para evitar confilctos, si no tienes ningun otro servicio, entonces no estaran utilizados.
-
-```bash
-netstat -tuln | grep -E '30303|8545|8546|8551|5052|9000'
 ```
 
 ---
