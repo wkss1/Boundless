@@ -116,6 +116,20 @@ Usaremos docker para la instalacion del nodo, asi que con estos comando actualiz
 lsb_release -a
 ```
 
+luego vamos a activar el path de nvidia-smi:
+```bash
+which nvidia-smi
+```
+
+y corremos nvidia-smi:
+
+```bash
+nvidia-smi
+```
+
+
+Si te da errores aun en local (en el servidor que te he recomendado no deberia darte error), hacemos la instalacion de los drivers desde cero:
+
 - Detectar modelo gpu:
   
 ```bash
@@ -171,6 +185,7 @@ Y luego verifico usando:  
 nvidia-smi 
 ```
 
+### Instalamos dependencias:
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install curl iptables build-essential git wget lz4 jq make gcc nano automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip -y
