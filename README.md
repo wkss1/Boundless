@@ -139,6 +139,11 @@ luego de borrarlos, reiniciamos:
 ```bash
 sudo reboot
 ```
+Ahora instalamos esto:
+
+```bash
+sudo apt install ubuntu-drivers-common -y
+```
 
 Luego vamos a ver los drivers para tu gpu.
 
