@@ -414,6 +414,12 @@ sudo apt update
 ```bash
 sudo apt install -y cargo
 ```
+Instala just:
+
+```bash
+cargo install just
+```
+
  Verificar entorno limpio. Correr em cd boundless:  
 
 Vamos al directorio de Boundless
