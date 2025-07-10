@@ -245,34 +245,9 @@ sudo systemctl restart docker
 Ejecuta:
 
 ```bash
-cat /etc/docker/daemon.json
-```
-
-Asegúrate de que incluya algo como:
-
-```bash
-{
-  "runtimes": {
-    "bento": {
-      "path": "/usr/local/sbin/bento-runc",
-      "runtimeArgs": []
-    },
-    "nvidia": {
-      "args": [],
-      "path": "nvidia-container-runtime"
-    }
-  }
-} 
-```
-
-* nvidia es necesario para que Docker use la GPU.
-* bento es un runtime agregado automáticamente por Boundless (no se usa manualmente pero no debe borrarse).
-  corre para verificar que docker puede usar tu gpu:
-
-```bash
   docker run --rm --gpus all nvidia/cuda:12.3.2-base-ubuntu22.04 nvidia-smi
 ```
-
+ debe darte el mismo output que cuando haces nvidia-smi en tu terminal, si no lo reconoce quiere decir que docker no tiene acceso a tu gpu.
 ---
 
 ## 2️⃣ Instala Boundless
@@ -461,11 +436,11 @@ El order stream es donde buscara las ordenes y tambien varia segun la red.
 PRIVATE_KEY=tu_clave_privada_sin_0x
 RPC_URL=<tu rpc de sepolia>
 
-VERIFIER_ADDRESS=0x925d8331ddc0a1F0d96E68CF073DFE1d92b69187
-BOUNDLESS_MARKET_ADDRESS=0x13337C76fE2d1750246B68781ecEe164643b98Ec
-SET_VERIFIER_ADDRESS=0x7aAB646f23D1392d4522CFaB0b7FB5eaf6821d64
+export VERIFIER_ADDRESS=0x0b144e07a0826182b6b59788c34b32bfa86fb711
+export BOUNDLESS_MARKET_ADDRESS=0x26759dbB201aFbA361Bec78E097Aa3942B0b4AB8
+export SET_VERIFIER_ADDRESS=0x8C5a8b5cC272Fe2b74D18843CF9C3aCBc952a760
 
-ORDER_STREAM_URL="https://eth-sepolia.beboundless.xyz/"
+export ORDER_STREAM_URL="https://base-mainnet.beboundless.xyz"
 ```
 
 Luego estamos listos para arrancar y probar con:
