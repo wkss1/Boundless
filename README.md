@@ -54,14 +54,14 @@ Esto dependera de el fee que utilices y el precio al que estes dispuesto a bloqu
 ## ☁️ Rentar GPU (opcional)
 Podemos correrlo local, pero entiendo que muchos no tienen un equipo para esto e igual quieren participar, les dejo aqui algunas opciones para rentar un servidor con tarjeta grafica.
 
-- Vast.ai es la opción recomendada:
+- Vast ai es la opción recomendada:
 
 Genera clave SSH: ssh-keygen
 
 Usa template: Ubuntu o PyTorch (ya tiene CUDA y drivers)
 
-- GPU Mart
-Es otra opción que probamos para esto y tiene varias opciones de GPU y buen servicio al cliente.
+Este es el template que necesitas: 
+https://cloud.vast.ai/?ref_id=62897&creator_id=62897&name=Ubuntu%2022.04%20VM
 
 
 Una vez que tenemos el servidor solo debemos acceder a el desde nuestro equipo.
@@ -101,9 +101,6 @@ luego le diras que "yes" y luego pondras la clave que pusiste al generar tu SSH 
 Luego de generada en vast podemos ir la apartado de "Keys", VAMOS A SSH Key y agregamos la llave aqui.
 
 
-Si estas en windows puedes usar Putty para acceder a tu servidor usando SSH. simplemente con tu iP del servidor usuario y clave podras hacerlo (buscate un video de como usar putty para ssh)
-y ya estaras en el terminal de tu servidor alguilado! Felicidades
-
 ## 1️⃣ Instalar dependencias y Docker
 
 Usaremos docker para la instalacion del nodo, asi que con estos comando actualizamos el sistema y descargamos las dependencias (software que necesitas para poder correr el nodo)
@@ -127,63 +124,6 @@ y corremos nvidia-smi:
 nvidia-smi
 ```
 
-
-Si te da errores aun en local (en el servidor que te he recomendado no deberia darte error), hacemos la instalacion de los drivers desde cero:
-
-- Detectar modelo gpu:
-  
-```bash
-lspci | grep -i nvidia 
-```
-
-Esto debería mostrarte la línea con el modelo de tu tarjeta gráfica.
-
-Por ejemplo:  ej: 03:00.0 VGA compatible controller: NVIDIA Corporation GP107 [GeForce GTX 1050 Ti] (rev a1)
-
-Si no te devuelve eso, debemos borrar los drivers y luego instalar los correctos
-
-```bash
-sudo apt-get purge nvidia* -y
-sudo apt-get autoremove -y
-sudo apt-get autoclean
-```
-
-luego de borrarlos, reiniciamos:
-
-```bash
-sudo reboot
-```
-Ahora instalamos esto:
-
-```bash
-sudo apt install ubuntu-drivers-common -y
-```
-
-Luego vamos a ver los drivers para tu gpu.
-
-```bash
-sudo ubuntu-drivers devices
-```
-
-Deberia darte algo como:  
-
-vendor : NVIDIA Corporation driver : nvidia-driver-575-open - third-party non-free driver : nvidia-driver-535-open - distro non-free driver : nvidia-driver-570-open - distro non-free
-
-en mi caso procedo a instalar el primero 535
-
-```bash
-sudo apt update && sudo apt install -y nvidia-driver-575
-```
-
-```bash
-sudo reboot
-```
-
-Y luego verifico usando:  
-
-```bash
-nvidia-smi 
-```
 
 ### Instalamos dependencias:
 ```bash
@@ -415,6 +355,8 @@ just broker clean || true
  - corre una prueba:
     
 ```bash
+cd 
+cd boundless
 RUST_LOG=info bento_cli -c 32
 ```
 
@@ -473,7 +415,7 @@ Aqui debemos ajustar el segment size y el kecck según recomendación oficial de
 
 https://docs.beboundless.xyz/provers/performance-optimization#finding-the-maximum-segment_size-for-gpu-vram
 
-Tambien podemos revisar los agentes de execution y modificar sus recursos asignandoles mas memoria y podemos crear mas agentes de execution tambien, lo mismo con el agente de GPU, podemos darle mas recursos o crear mas agentes GPU si tenemos varias tarjetas graficas.
+Tambien podemos revisar los agentes de execution y los servicios y modificar sus recursos asignandoles mas memoria y cpus y podemos crear mas agentes de execution tambien, lo mismo con el agente de GPU, podemos darle mas recursos o crear mas agentes GPU si tenemos varias tarjetas graficas.
 
 Para trabajar mejor te recomiendo tener 3 agentes de execution por cada gpu agent que tengas! 
 
@@ -553,7 +495,7 @@ En general trata de:
 
 La transaccion de lock in es la mas importante ya que es la que te permite bloquear la prueba y asegurarte que tu la resuelvas, por eso es indispensable, enviar esta transaccion lo antes posible y enviarla con un fee de prioridad que te petmita adelantarte al resto de mineros que compiten por bloquearla
 
-En el archivo broker.toml solo uedes anadir priority gas, que no es lo mismo que priority fee en gwei! es una diferencia importante, lo que nosotros queremos modificar es el priority fee en GWEI, no el gas! y la unica forma de modificarlo es cambiando el codigo fuente de boundless para forzar un priority fee mas elevado y esto no lo incluyo en esta guia por que es algo mucho mas avanzado! si eres esa persona mas avanzada, te invito a unirte al programa de inbest donde estamos modo degens haciendo todo esto!
+La unica forma de optimizar aun mas es cambiando el codigo fuente de boundless para forzar un priority fee mas elevado y esto no lo incluyo en esta guia por que es algo mucho mas avanzado y perzonalizado! si eres esa persona mas avanzada, te invito a unirte al programa de inbest donde estamos modo degens haciendo todo esto!
 
 ¿Listo para minar ZK? 🚀  
 
