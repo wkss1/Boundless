@@ -291,13 +291,6 @@ rustup update
 cargo install --git https://github.com/risc0/risc0 bento-client --bin bento_cli
 ```
 
-# 13. Agregar cargo al PATH (solo si no está ya)
-
-```bash
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
 # 14. Verificar bento_cli
 
 ```bash
@@ -315,27 +308,13 @@ cargo install --locked boundless-cli
 boundless -h
 ```
 
-si cargo da error verificar:   
-
-```bash
-sudo nano /etc/apt/sources.list.d/nvidia-container-toolkit.list
-```
- 
- deberia estar solo esta activa:  deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /
-
-```bash 
-sudo apt update
-```
-```bash
-sudo apt install -y cargo
-```
 Instala just:
 
 ```bash
 cargo install just
 ```
 
- Verificar entorno limpio. Correr em cd boundless:  
+ Verificar entorno limpio. Correr en cd boundless:  
 
 Vamos al directorio de Boundless
 
