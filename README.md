@@ -197,7 +197,7 @@ Ahora vamos a clonar el repositorio oficial de boundless
 ```bash
 git clone https://github.com/boundless-xyz/boundless
 cd boundless
-git checkout release-0.10
+git checkout release-0.13.2
 ```
 
 Da permiso al script de instalacion automatico de Boundless: 
